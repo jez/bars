@@ -36,6 +36,7 @@ function histogram(data, opts) {
 
   var maxKey = max(data.map(function(d){ return d.key.length }));
   var maxVal = max(data.map(function(d){ return d.val })) || width;
+  var maxDigits = max(data.map(function(d){ return Math.ceil(Math.log10(d.val)); }));
   var str = '';
 
   // blah blah histo
@@ -47,7 +48,7 @@ function histogram(data, opts) {
     var blank = width - shown
     var bar = Array(shown + 1).join(barc);
     bar += Array(blank + 1).join(' ');
-    str += fmt('  %*s | %s | %s\n', d.key, maxKey, bar, map(d.val));
+    str += fmt('  %*s | %*s | %s\n', d.key, maxKey, map(d.val), maxDigits, bar);
   }
 
   return str;
